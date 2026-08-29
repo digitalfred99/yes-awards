@@ -3,17 +3,29 @@ import { NextRequest, NextResponse } from "next/server";
 const allowedOrigins = new Set([
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "https://digitalfred99.github.io",
 ]);
 
 function corsHeaders(origin: string | null) {
   const headers = new Headers();
+
   if (origin && allowedOrigins.has(origin)) {
     headers.set("Access-Control-Allow-Origin", origin);
     headers.set("Vary", "Origin");
   }
-  headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS"
+  );
+
+  headers.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+
   headers.set("Access-Control-Max-Age", "86400");
+
   return headers;
 }
 
@@ -25,7 +37,9 @@ export function proxy(request: NextRequest) {
   }
 
   const response = NextResponse.next();
+
   headers.forEach((value, key) => response.headers.set(key, value));
+
   return response;
 }
 

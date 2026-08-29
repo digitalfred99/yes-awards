@@ -16,6 +16,7 @@
     "create:super-admin": "ts-node --project tsconfig.typeorm.json scripts/create-super-admin.ts"
   },
   "dependencies": {
+    "cloudinary": "^2.11.0",
     "dotenv": "^17.4.2",
     "next": "16.3.3",
     "pg": "^8.23.0",

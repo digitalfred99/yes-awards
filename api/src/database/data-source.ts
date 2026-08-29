@@ -39,9 +39,7 @@
 
 //Production
 import "reflect-metadata";
-
 import { DataSource } from "typeorm";
-
 import { User } from "./entities/User";
 import { Category } from "./entities/Category";
 
@@ -55,12 +53,10 @@ export const AppDataSource = async () => {
   dataSource = new DataSource({
     type: "postgres",
     url: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
     synchronize: false,
     logging: process.env.NODE_ENV === "development",
-    entities: [
-      User,
-      Category,
-    ],
+    entities: [User, Category],
   });
 
   if (!dataSource.isInitialized) {

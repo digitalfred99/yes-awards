@@ -7,7 +7,7 @@ export const BRAND = {
 
 export const ADMIN_WHATSAPP = [
   "233247098016",
-  "233594214069",
+  "233594214068",
   "233249877209",
 ];
 

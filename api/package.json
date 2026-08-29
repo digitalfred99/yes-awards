@@ -1,0 +1,36 @@
+{
+  "name": "yes-awards",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typeorm": "cross-env TS_NODE_PROJECT=tsconfig.typeorm.json typeorm-ts-node-commonjs -d src/db/cli-data-source.ts",
+    "gen:entities": "ts-node --project tsconfig.typeorm.json scripts/gen-entities.ts",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:create": "npm run typeorm -- migration:create",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "next": "16.3.3",
+    "pg": "^8.23.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "typeorm": "^1.1.0",
+    "uuid": "^14.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "cross-env": "^10.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  }
+}

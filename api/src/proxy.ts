@@ -1,0 +1,32 @@
+import { NextRequest, NextResponse } from "next/server";
+
+const allowedOrigins = new Set([
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+]);
+
+function corsHeaders(origin: string | null) {
+  const headers = new Headers();
+  if (origin && allowedOrigins.has(origin)) {
+    headers.set("Access-Control-Allow-Origin", origin);
+    headers.set("Vary", "Origin");
+  }
+  headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  headers.set("Access-Control-Max-Age", "86400");
+  return headers;
+}
+
+export function proxy(request: NextRequest) {
+  const headers = corsHeaders(request.headers.get("origin"));
+
+  if (request.method === "OPTIONS") {
+    return new NextResponse(null, { status: 204, headers });
+  }
+
+  const response = NextResponse.next();
+  headers.forEach((value, key) => response.headers.set(key, value));
+  return response;
+}
+
+export const config = { matcher: "/api/:path*" };

@@ -5,7 +5,7 @@ import type { User } from "../types";
 import { NomineeFlyer } from "./NomineeFlyer";
 
 const FLYER_WIDTH = 1080;
-const FLYER_HEIGHT = 1260;
+const FLYER_HEIGHT = 1300;
 
 export function FlyerCard({
   user,
@@ -13,6 +13,8 @@ export function FlyerCard({
   votingLink,
   ussdCode,
   votingSteps,
+  poweredBy,
+  sponsors,
 }: {
   user: Pick<User, "id" | "firstName" | "lastName" | "nickName" | "category" | "profileImage"> & {
     nomineeCode?: string | null;
@@ -21,6 +23,8 @@ export function FlyerCard({
   votingLink?: string;
   ussdCode?: string;
   votingSteps?: string[];
+  poweredBy?: string;
+  sponsors?: string;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const flyerRef = useRef<HTMLDivElement>(null);
@@ -106,6 +110,8 @@ export function FlyerCard({
             votingLink={votingLink}
             ussdCode={ussdCode}
             votingSteps={votingSteps}
+            poweredBy={poweredBy}
+            sponsors={sponsors}
           />
         </div>
       </div>

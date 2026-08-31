@@ -9,6 +9,22 @@ export function resolveProfileImage(user: Pick<User, "profileImage">): string {
   return user.profileImage.startsWith("http") ? user.profileImage : `${IMAGE_HOST}${user.profileImage}`;
 }
 
+// PhotoUpload.tsx renders this same photo elsewhere on the dashboard page
+// WITHOUT crossOrigin set, while the flyer needs crossOrigin="anonymous" to
+// export it via canvas. Safari/WebKit has a known bug where it can reuse a
+// non-CORS cache entry for a same-URL CORS request, silently tainting the
+// image on export — Chrome keys its cache by CORS mode and doesn't have
+// this problem, which is why it can work on desktop and break on iPhone for
+// the exact same photo. Appending a distinct query param forces Safari to
+// treat this as a separate resource/cache entry, sidestepping the bug
+// without touching PhotoUpload.tsx.
+export function resolveFlyerPhoto(user: Pick<User, "profileImage">): string {
+  const url = resolveProfileImage(user);
+  if (!url) return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}flyerExport=1`;
+}
+
 // Once nomineeCode exists on the User table, this just returns it. Until
 // then it derives a placeholder from the id so the flyer isn't blank.
 // Delete the fallback branch once the backend field is live everywhere.

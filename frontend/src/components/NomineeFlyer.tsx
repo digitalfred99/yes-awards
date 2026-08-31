@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import type { User } from "../types";
-import { resolveProfileImage, nomineeCodeFor, PLACEHOLDER_VOTING_LINK } from "../utils/media";
+import { resolveFlyerPhoto, nomineeCodeFor, PLACEHOLDER_VOTING_LINK } from "../utils/media";
 
 export interface NomineeFlyerProps {
   user: Pick<User, "id" | "firstName" | "lastName" | "nickName" | "category" | "profileImage"> & {
@@ -47,7 +47,7 @@ export const NomineeFlyer = forwardRef<HTMLDivElement, NomineeFlyerProps>(functi
   ref
 ) {
   const fullName = `${user.firstName} ${user.lastName}`;
-  const imageUrl = resolveProfileImage(user);
+  const imageUrl = resolveFlyerPhoto(user);
   const code = nomineeCode ?? nomineeCodeFor(user);
   const link = votingLink ?? PLACEHOLDER_VOTING_LINK;
 

@@ -13,6 +13,7 @@ export function FlyerCard({
   votingLink,
   ussdCode,
   votingSteps,
+  contactNumbers,
   poweredBy,
   sponsors,
 }: {
@@ -23,6 +24,7 @@ export function FlyerCard({
   votingLink?: string;
   ussdCode?: string;
   votingSteps?: string[];
+  contactNumbers?: [string, string];
   poweredBy?: string;
   sponsors?: string;
 }) {
@@ -110,6 +112,7 @@ export function FlyerCard({
             votingLink={votingLink}
             ussdCode={ussdCode}
             votingSteps={votingSteps}
+            contactNumbers={contactNumbers}
             poweredBy={poweredBy}
             sponsors={sponsors}
           />

@@ -14,8 +14,9 @@ export interface NomineeFlyerProps {
   // Override the whole step list if the external voting system's real flow
   // ends up different from the 6-step dial/select/enter/confirm/pay pattern.
   votingSteps?: string[];
-  // Optional footer strip — omitted entirely (no empty bar) if not provided.
-  // No phone number field by design.
+  // Footer strip, always shown — pass real values once you have them,
+  // otherwise the placeholders below render.
+  contactNumbers?: [string, string];
   poweredBy?: string;
   sponsors?: string;
 }
@@ -33,7 +34,16 @@ function Flourish({ children }: { children: React.ReactNode }) {
 // Fixed 1080x1350 canvas — FlyerCard scales it down visually for on-screen
 // preview without touching the export resolution.
 export const NomineeFlyer = forwardRef<HTMLDivElement, NomineeFlyerProps>(function NomineeFlyer(
-  { user, nomineeCode, votingLink, ussdCode = "[USSD CODE]", votingSteps, poweredBy, sponsors },
+  {
+    user,
+    nomineeCode,
+    votingLink,
+    ussdCode = "[USSD CODE]",
+    votingSteps,
+    contactNumbers = ["0000-000-000", "0000-000-000"],
+    poweredBy = "Sponsor Name",
+    sponsors = "Sponsor Name",
+  },
   ref
 ) {
   const fullName = `${user.firstName} ${user.lastName}`;
@@ -62,7 +72,7 @@ export const NomineeFlyer = forwardRef<HTMLDivElement, NomineeFlyerProps>(functi
           <div className="flyer-photo-frame">
             <div className="flyer-photo-inner">
               {imageUrl ? (
-                <img className="flyer-photo" src={imageUrl} alt={fullName} />
+                <img className="flyer-photo" src={imageUrl} alt={fullName} crossOrigin="anonymous" />
               ) : (
                 <div className="flyer-photo flyer-photo-placeholder">{user.firstName[0]}</div>
               )}
@@ -93,23 +103,23 @@ export const NomineeFlyer = forwardRef<HTMLDivElement, NomineeFlyerProps>(functi
           </div>
         </div>
 
-        {(poweredBy || sponsors) && (
-          <div className="flyer-footer-top">
-            {poweredBy && (
-              <div className="flyer-footer-item">
-                <span className="flyer-footer-label">Powered By</span>
-                <span className="flyer-footer-value">{poweredBy}</span>
-              </div>
-            )}
-            {poweredBy && sponsors && <div className="flyer-footer-divider" />}
-            {sponsors && (
-              <div className="flyer-footer-item">
-                <span className="flyer-footer-label">Sponsors</span>
-                <span className="flyer-footer-value">{sponsors}</span>
-              </div>
-            )}
+        <div className="flyer-footer-top">
+          <div className="flyer-footer-item">
+            <span className="flyer-footer-label">For Sponsorship &amp; Enquiries</span>
+            <span className="flyer-footer-value">{contactNumbers[0]}</span>
+            <span className="flyer-footer-value">{contactNumbers[1]}</span>
           </div>
-        )}
+          <div className="flyer-footer-divider" />
+          <div className="flyer-footer-item">
+            <span className="flyer-footer-label">Powered By:</span>
+            <span className="flyer-footer-value">{poweredBy}</span>
+          </div>
+          <div className="flyer-footer-divider" />
+          <div className="flyer-footer-item">
+            <span className="flyer-footer-label">Sponsors</span>
+            <span className="flyer-footer-value">{sponsors}</span>
+          </div>
+        </div>
 
         <div className="flyer-footer-bottom">
           <span>

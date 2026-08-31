@@ -1,0 +1,267 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap");
+
+/* ---------- Card wrapper (dashboard) ---------- */
+
+.flyer-card .flyer-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.flyer-scale {
+  transform-origin: top left;
+}
+
+.flyer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* ---------- Flyer canvas: 1080x1260 ---------- */
+
+.flyer {
+  --flyer-black: #080401;
+  --flyer-brown-dark: #1a0c01;
+  --flyer-gold-1: #cb851e;
+  --flyer-gold-2: #d79a30;
+  --flyer-gold-3: #f5c959;
+  --flyer-champagne: #eeb64e;
+  --flyer-champagne-light: #fbe39b;
+  --flyer-white: #fefefe;
+  --flyer-text-secondary: #f0ece1;
+  --flyer-gold-border: #ae6d15;
+  --flyer-gold-gradient: linear-gradient(135deg, var(--flyer-gold-1), var(--flyer-gold-3), var(--flyer-champagne-light));
+
+  position: relative;
+  width: 1080px;
+  height: 1260px;
+  overflow: hidden;
+  background: var(--flyer-black);
+  font-family: "Jost", sans-serif;
+  color: var(--flyer-white);
+  isolation: isolate;
+}
+
+.flyer-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  /* the background is a busy, bright award-stage photo — dial it back so
+     it reads as texture behind the type, not competing with it */
+  opacity: 0.55;
+}
+
+.flyer-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(8, 4, 1, 0.82) 0%, rgba(8, 4, 1, 0.74) 24%, rgba(8, 4, 1, 0.88) 100%);
+}
+
+.flyer-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 52px 60px 40px;
+  box-sizing: border-box;
+}
+
+.flyer-logo {
+  width: 156px;
+  height: auto;
+  object-fit: contain;
+  align-self: flex-start;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.6));
+}
+
+/* ---------- Two-column body ---------- */
+
+.flyer-body {
+  flex: 1;
+  margin-top: 36px;
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.flyer-photo-frame {
+  flex: 0 0 380px;
+  width: 380px;
+  height: 780px;
+  padding: 10px;
+  border-radius: 6px;
+  background: var(--flyer-gold-gradient);
+  box-shadow: 0 0 0 2px var(--flyer-brown-dark) inset, 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 46px rgba(215, 154, 48, 0.3);
+}
+
+.flyer-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid var(--flyer-brown-dark);
+}
+
+.flyer-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cinzel", serif;
+  font-size: 96px;
+  font-weight: 600;
+  color: var(--flyer-champagne-light);
+  background: linear-gradient(155deg, var(--flyer-brown-dark), var(--flyer-black));
+}
+
+.flyer-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.flyer-eyebrow {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--flyer-gold-3);
+}
+
+.flyer-name {
+  margin: 10px 0 0;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 1.14;
+  color: var(--flyer-white);
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.45));
+}
+
+.flyer-nickname {
+  margin: 6px 0 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--flyer-champagne-light);
+}
+
+.flyer-as {
+  margin: 14px 0 0;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--flyer-text-secondary);
+  opacity: 0.85;
+}
+
+.flyer-category {
+  margin: 8px 0 0;
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  color: var(--flyer-gold-3);
+}
+
+.flyer-divider {
+  margin: 28px 0;
+  width: 90px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--flyer-gold-gradient);
+}
+
+.flyer-steps-title {
+  margin: 0 0 16px;
+  font-family: "Cinzel", serif;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--flyer-white);
+}
+
+.flyer-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: flyer-step;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.flyer-steps li {
+  counter-increment: flyer-step;
+  position: relative;
+  padding-left: 40px;
+  font-size: 21px;
+  line-height: 1.35;
+  color: var(--flyer-text-secondary);
+}
+
+.flyer-steps li::before {
+  content: counter(flyer-step);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cinzel", serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--flyer-black);
+  background: var(--flyer-gold-gradient);
+}
+
+/* ---------- Footer bar ---------- */
+
+.flyer-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(174, 109, 21, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.flyer-footer-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(240, 236, 225, 0.2);
+}
+
+.flyer-footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flyer-footer-label {
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--flyer-text-secondary);
+  opacity: 0.7;
+}
+
+.flyer-footer-value {
+  font-family: "Cinzel", serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--flyer-gold-3);
+}

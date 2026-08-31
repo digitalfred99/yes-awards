@@ -4,4 +4,5 @@ import App from "./App";
 import "./styles.css";
 import "./picker.css";
 import "./status.css";
+import "./components/flyer.css";
 createRoot(document.getElementById("root")!).render(<StrictMode><App/></StrictMode>);

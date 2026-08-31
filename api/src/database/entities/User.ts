@@ -53,7 +53,6 @@ export class User {
 
   @Column({ type: "enum", enum: UserRole })
   declare role: UserRole;
-
   
   @Column({ type: "varchar", length: 255, nullable: true })
   declare category: string;

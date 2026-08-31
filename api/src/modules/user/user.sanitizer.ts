@@ -11,6 +11,7 @@ export class UserSanitizer {
     "role",
     "category",
     "interest",
+    "nomineeCode"
   ] as const;
 
   private static readonly UPDATABLE_FIELDS = [
@@ -21,6 +22,7 @@ export class UserSanitizer {
     "category",
     "interest",
     "password",
+    "nomineeCode"
   ] as const;
 
   private static pick(data: unknown, fields: readonly string[]): Record<string, unknown> {

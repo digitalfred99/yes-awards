@@ -11,6 +11,7 @@ export type CreateUserDTO = {
   role: UserRole;
   category?: string;
   interest?: UserInterest;
+  nomineeCode?: string;
 };
 
 // ── Update ───────────────────────────────────────────────────────
@@ -21,6 +22,7 @@ export type UpdateUserDTO = Partial<{
   gender: Gender;
   category: string;
   interest: UserInterest;
+  nomineeCode?: string;
   password: string;
 }>;
 
@@ -32,6 +34,7 @@ export type FilterUserDTO = {
   gender?: Gender;
   role?: UserRole;
   category?: string;
+  nomineeCode?: string;
   status?: UserStatus;
   isActive?: boolean;
 };

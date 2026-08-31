@@ -60,7 +60,7 @@ export class User {
   @Column({ type: "enum", enum: UserInterest, nullable: true })
   declare interest: UserInterest;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "varchar", length: 255, unique: true, nullable: true })
   declare nomineeCode: string;
 
   @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })

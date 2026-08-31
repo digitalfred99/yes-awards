@@ -32,6 +32,7 @@ export class UserService {
     if (filters.gender) where.gender = filters.gender as Gender;
     if (filters.role) where.role = filters.role as UserRole;
     if (filters.category) where.category = ILike(`%${filters.category}%`);
+    if (filters.nomineeCode) where.nomineeCode = ILike(`%${filters.nomineeCode}%`);
     if (filters.status) where.status = filters.status as UserStatus;
     if (filters.isActive !== undefined) where.isActive = filters.isActive;
 
@@ -76,6 +77,16 @@ export class UserService {
       throw new CustomAppError("User with this phone number already exists", 400, ErrorCodes.RECORD_ALREADY_EXISTS.code, ErrorCodes.RECORD_ALREADY_EXISTS.label, "user_exists");
     }
 
+    if (safeData.nomineeCode) {
+      const existingNomineeCode = await repo.findOne({
+        where: { nomineeCode: safeData.nomineeCode}
+      });
+
+      if (existingNomineeCode) {
+        throw new CustomAppError("User with this nominee code already exists", 400, ErrorCodes.RECORD_ALREADY_EXISTS.code, ErrorCodes.RECORD_ALREADY_EXISTS.label, "nominee_code_exists");
+      }
+    }
+
     const newUser = repo.create({
       firstName: safeData.firstName,
       lastName: safeData.lastName,
@@ -85,6 +96,7 @@ export class UserService {
       role: safeData.role,
       category: safeData.category,
       interest: safeData.interest,
+      nomineeCode: safeData.nomineeCode,
       password: safeData.password,
     });
 
@@ -112,6 +124,15 @@ export class UserService {
       });
       if (duplicateUser && duplicateUser.id !== id) {
         throw new CustomAppError("User with this phone number already exists", 400, ErrorCodes.RECORD_ALREADY_EXISTS.code, ErrorCodes.RECORD_ALREADY_EXISTS.label, "user_exists");
+      }
+    }
+
+    if (safeData.nomineeCode) {
+      const duplicateNomineeCode = await repo.findOne({
+        where: { nomineeCode: safeData.nomineeCode, isDeleted: false },
+      });
+      if (duplicateNomineeCode && duplicateNomineeCode.id !== id) {
+        throw new CustomAppError("User with this nominee code already exists", 400, ErrorCodes.RECORD_ALREADY_EXISTS.code, ErrorCodes.RECORD_ALREADY_EXISTS.label, "nominee_code_exists");
       }
     }
 

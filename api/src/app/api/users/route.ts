@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
       gender: (params.get("gender") as FilterUserDTO["gender"]) ?? undefined,
       role: (params.get("role") as FilterUserDTO["role"]) ?? undefined,
       category: params.get("category") ?? undefined,
+      nomineeCode: params.get("nomineeCode") ?? undefined,
       status: (params.get("status") as FilterUserDTO["status"]) ?? undefined,
       isActive: params.has("isActive") ? params.get("isActive") === "true" : undefined,
     };

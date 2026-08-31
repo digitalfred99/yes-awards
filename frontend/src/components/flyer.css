@@ -27,6 +27,14 @@
   margin-top: 20px;
 }
 
+.flyer-hint {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--flyer-text-secondary, #6b6459);
+  opacity: 0.75;
+}
+
 /* ---------- Flyer canvas: 1080x1350 ---------- */
 
 .flyer {

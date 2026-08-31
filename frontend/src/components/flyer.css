@@ -215,7 +215,7 @@
   margin: 0;
   font-family: "Cinzel", serif;
   font-weight: 700;
-  font-size: 46px;
+  font-size: 50px;
   line-height: 1.12;
   color: var(--flyer-white);
   filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.45));
@@ -237,24 +237,24 @@
 }
 
 .flyer-nickname {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 500;
   color: var(--flyer-champagne-light);
 }
 
 .flyer-as {
-  margin: 12px 0 0;
+  margin: 0;
   font-style: italic;
   font-weight: 300;
-  font-size: 19px;
+  font-size: 25px;
   color: var(--flyer-text-secondary);
   opacity: 0.85;
 }
 
 .flyer-category {
-  margin: 0;
+  margin: -1.2px;
   font-weight: 600;
-  font-size: 27px;
+  font-size: 30px;
   letter-spacing: 0.03em;
   color: var(--flyer-gold-3);
 }
@@ -267,7 +267,7 @@
   max-width: 460px;
   padding: 12px 20px;
   font-family: "Cinzel", serif;
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -317,14 +317,15 @@
   align-items: center;
   justify-content: center;
   font-family: "Cinzel", serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--flyer-black);
   background: var(--flyer-gold-gradient);
+  padding: 5px;
 }
 
 .flyer-step-text {
-  font-size: 18px;
+  font-size: 25px;
   line-height: 1.3;
   color: var(--flyer-text-secondary);
 }
@@ -334,8 +335,8 @@
 .flyer-footer-top {
   margin-top: 44px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   gap: 28px;
   padding: 16px 24px;
   border-top: 1px solid rgba(174, 109, 21, 0.5);
@@ -351,12 +352,12 @@
 .flyer-footer-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   gap: 4px;
 }
 
 .flyer-footer-label {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--flyer-text-secondary);
@@ -373,7 +374,7 @@
   margin-top: 18px;
   padding: 14px 0;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.02em;
   color: var(--flyer-black);
   background: var(--flyer-gold-gradient);

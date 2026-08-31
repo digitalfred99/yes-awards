@@ -3,9 +3,35 @@ import { toPng } from "html-to-image";
 import { Download, ExternalLink, Share2 } from "lucide-react";
 import type { User } from "../types";
 import { NomineeFlyer } from "./NomineeFlyer";
+import { resolveFlyerPhoto } from "../utils/media";
 
 const FLYER_WIDTH = 1080;
 const FLYER_HEIGHT = 1300;
+
+// Waits for an image to be fully loaded AND decoded before resolving.
+// html-to-image can start rasterizing before a cross-origin image (which
+// needs its own network round-trip) has actually finished loading — that's
+// the race behind "works on the 2nd/3rd try, not the 1st": later attempts
+// hit the browser's cache and load fast enough to win the race by luck.
+// Explicitly awaiting every image first removes the race entirely.
+function preloadImage(src: string): Promise<void> {
+  return new Promise((resolve) => {
+    if (!src) { resolve(); return; }
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      if (img.decode) {
+        img.decode().then(() => resolve(), () => resolve());
+      } else {
+        resolve();
+      }
+    };
+    // Don't let one failed asset block the whole export — toPng will just
+    // render without it, same as before this change.
+    img.onerror = () => resolve();
+    img.src = src;
+  });
+}
 
 export function FlyerCard({
   user,
@@ -50,6 +76,15 @@ export function FlyerCard({
   // for print/large-screen sharing, not just feed-sized viewing.
   const renderBlob = async (): Promise<Blob> => {
     if (!flyerRef.current) throw new Error("Flyer not ready yet.");
+
+    // Pre-warm every image the flyer uses so toPng never has to race a
+    // network fetch mid-snapshot.
+    await Promise.all([
+      preloadImage(resolveFlyerPhoto(user)),
+      preloadImage(`${import.meta.env.BASE_URL}media/logo.webp`),
+      preloadImage(`${import.meta.env.BASE_URL}media/bg.webp`),
+    ]);
+
     const dataUrl = await toPng(flyerRef.current, { pixelRatio: 3, cacheBust: true });
     const res = await fetch(dataUrl);
     return res.blob();
@@ -109,21 +144,21 @@ export function FlyerCard({
   // doesn't reliably trigger a save: open the full-resolution image in a
   // new tab so the user can long-press → Save Image / Add to Photos, which
   // always works regardless of download-attribute support.
-  // const openFullImage = async () => {
-  //   setStatus("working");
-  //   setError("");
-  //   try {
-  //     const blob = await renderBlob();
-  //     const objectUrl = URL.createObjectURL(blob);
-  //     const win = window.open(objectUrl, "_blank", "noopener,noreferrer");
-  //     if (!win) throw new Error("Your browser blocked the new tab — allow pop-ups and try again.");
-  //     setStatus("idle");
-  //     setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
-  //   } catch (e) {
-  //     setError(e instanceof Error ? e.message : "Unable to open the flyer.");
-  //     setStatus("error");
-  //   }
-  // };
+  const openFullImage = async () => {
+    setStatus("working");
+    setError("");
+    try {
+      const blob = await renderBlob();
+      const objectUrl = URL.createObjectURL(blob);
+      const win = window.open(objectUrl, "_blank", "noopener,noreferrer");
+      if (!win) throw new Error("Your browser blocked the new tab — allow pop-ups and try again.");
+      setStatus("idle");
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unable to open the flyer.");
+      setStatus("error");
+    }
+  };
 
   const canNativeShare = typeof navigator !== "undefined" && !!navigator.share;
 
@@ -163,9 +198,9 @@ export function FlyerCard({
             <Share2 size={16} /> Share
           </button>
         )}
-        {/* <button className="button mini" disabled={status === "working"} onClick={() => void openFullImage()}>
+        <button className="button mini" disabled={status === "working"} onClick={() => void openFullImage()}>
           <ExternalLink size={16} /> Open full image
-        </button> */}
+        </button>
       </div>
       {!canNativeShare && (
         <p className="flyer-hint">

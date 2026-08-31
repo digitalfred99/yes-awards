@@ -56,9 +56,12 @@ export class User {
   
   @Column({ type: "varchar", length: 255, nullable: true })
   declare category: string;
-
+  
   @Column({ type: "enum", enum: UserInterest, nullable: true })
   declare interest: UserInterest;
+
+  @Column({ type: "varchar", length: 255, nullable: true })
+  declare nomineeCode: string;
 
   @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })
   declare status: UserStatus;

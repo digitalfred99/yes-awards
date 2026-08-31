@@ -144,21 +144,21 @@ export function FlyerCard({
   // doesn't reliably trigger a save: open the full-resolution image in a
   // new tab so the user can long-press → Save Image / Add to Photos, which
   // always works regardless of download-attribute support.
-  const openFullImage = async () => {
-    setStatus("working");
-    setError("");
-    try {
-      const blob = await renderBlob();
-      const objectUrl = URL.createObjectURL(blob);
-      const win = window.open(objectUrl, "_blank", "noopener,noreferrer");
-      if (!win) throw new Error("Your browser blocked the new tab — allow pop-ups and try again.");
-      setStatus("idle");
-      setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Unable to open the flyer.");
-      setStatus("error");
-    }
-  };
+  // const openFullImage = async () => {
+  //   setStatus("working");
+  //   setError("");
+  //   try {
+  //     const blob = await renderBlob();
+  //     const objectUrl = URL.createObjectURL(blob);
+  //     const win = window.open(objectUrl, "_blank", "noopener,noreferrer");
+  //     if (!win) throw new Error("Your browser blocked the new tab — allow pop-ups and try again.");
+  //     setStatus("idle");
+  //     setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+  //   } catch (e) {
+  //     setError(e instanceof Error ? e.message : "Unable to open the flyer.");
+  //     setStatus("error");
+  //   }
+  // };
 
   const canNativeShare = typeof navigator !== "undefined" && !!navigator.share;
 
@@ -198,9 +198,9 @@ export function FlyerCard({
             <Share2 size={16} /> Share
           </button>
         )}
-        <button className="button mini" disabled={status === "working"} onClick={() => void openFullImage()}>
+        {/* <button className="button mini" disabled={status === "working"} onClick={() => void openFullImage()}>
           <ExternalLink size={16} /> Open full image
-        </button>
+        </button> */}
       </div>
       {!canNativeShare && (
         <p className="flyer-hint">

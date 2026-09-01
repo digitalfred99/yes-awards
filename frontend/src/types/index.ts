@@ -4,7 +4,7 @@ export type Interest = "EXPLORING" | "COMMITTED" | "HIGHLY_COMMITTED" | "FULLY_C
 export type UserStatus = "ACTIVE" | "INACTIVE";
 export interface Category { id: string; name: string; description?: string | null; createdAt: string; }
 export interface CreateCategory { name: string; description?: string; }
-export interface User { id: string; firstName: string; lastName: string; nickName?: string | null; phoneNumber: string; gender: Gender; profileImage?: string | null; profileChangeCount: number; role: Role; category: string; interest: Interest; status: UserStatus; isActive: boolean; createdAt: string; updatedAt: string; }
+export interface User { id: string; firstName: string; lastName: string; nickName?: string | null; phoneNumber: string; gender: Gender; profileImage?: string | null; profileChangeCount: number; role: Role; category: string; interest: Interest; status: UserStatus; isActive: boolean; createdAt: string; updatedAt: string; nomineeCode?: string | null; }
 export interface ApiResponse<T> { success: boolean; data: T; message?: string; }
 export interface UserList { users: User[]; count: number; }
 export interface CategoryList { categories: Category[]; count: number; }

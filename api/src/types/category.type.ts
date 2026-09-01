@@ -2,6 +2,7 @@
 export type CreateCategoryDTO = {
   name: string;
   description?: string;
+  createdBy?: string;
 };
 
 // ── Update ───────────────────────────────────────────────────────

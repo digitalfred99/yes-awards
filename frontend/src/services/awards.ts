@@ -3,7 +3,16 @@ import type { Category, CategoryList, CreateCategory, CreateUser, LoginResult, U
 import { session } from "../utils/session";
 export const awardsApi = {
   categories: (name = "") => request<CategoryList>(`/categories${name ? `?name=${encodeURIComponent(name)}` : ""}`),
-  createCategory: (data: CreateCategory) => request<Category>("/categories", { method: "POST", body: JSON.stringify(data) }),
+  // createCategory: (data: CreateCategory) => request<Category>("/categories", { method: "POST", body: JSON.stringify(data) }),
+  createCategory: (data: CreateCategory, createdBy: string) =>
+  request<Category>("/categories", {
+    method: "POST",
+    body: JSON.stringify({
+      ...data,
+      createdBy,
+    }),
+  }),
+  
   updateCategory: (id: string, data: Partial<CreateCategory>) => request<Category>(`/categories/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteCategories: (ids: string[]) => request<unknown>("/categories", { method: "DELETE", body: JSON.stringify({ ids }) }),
   users: (filters = "") => request<UserList>(`/users${filters ? `?${filters}` : ""}`).then(data => { const current = session.get(); return current?.user.role === "ADMIN" ? { ...data, users: data.users.filter(user => user.role !== "SUPER_ADMIN") } : data; }),

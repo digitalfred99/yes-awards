@@ -3,6 +3,7 @@ import { validate as isUUID } from "uuid";
 import { FindOptionsWhere, ILike, In, Not } from "typeorm";
 import { AppDataSource } from "@/database/data-source";
 import { Category } from "@/database/entities/Category";
+import { User } from "@/database/entities/User";
 import { CreateCategoryDTO, FilterCategoryDTO, UpdateCategoryDTO } from "@/types/category.type";
 import { CustomAppError } from "@/lib/errors/customAppError";
 import { ErrorCodes } from "@/lib/errors/errorCodes";
@@ -50,20 +51,56 @@ export class CategoryService {
 
   static async create(data: CreateCategoryDTO) {
     const repo = await this.repo();
-    data = { ...data, name: data.name?.trim().toUpperCase() };
+    const db = await AppDataSource();
+    const userRepo = db.getRepository(User);
+
+    data = {
+      ...data,
+      name: data.name?.trim().toUpperCase(),
+    };
+
     validateCreateCategory(data);
 
     const existingCategory = await repo.findOne({
-      where: { name: data.name, isDeleted: false },
+      where: {
+        name: data.name,
+        isDeleted: false,
+      },
     });
 
     if (existingCategory) {
-      throw new CustomAppError("Category with this name already exists", 400, ErrorCodes.RECORD_ALREADY_EXISTS.code, ErrorCodes.RECORD_ALREADY_EXISTS.label, "category_exists");
+      throw new CustomAppError(
+        "Category with this name already exists",
+        400,
+        ErrorCodes.RECORD_ALREADY_EXISTS.code,
+        ErrorCodes.RECORD_ALREADY_EXISTS.label,
+        "category_exists"
+      );
     }
+
+    const createdBy = await userRepo.findOne({
+      where: {
+        id: data.createdBy,
+        isDeleted: false,
+      },
+    });
+
+    if (!createdBy) {
+      throw new CustomAppError(
+        "No user found to create this category",
+        404,
+        ErrorCodes.RECORD_NOT_FOUND.code,
+        ErrorCodes.RECORD_NOT_FOUND.label,
+        "user_not_found"
+      );
+    }
+
+    const adminName = `${createdBy.firstName} ${createdBy.lastName}`;
 
     const newCategory = repo.create({
       name: data.name,
       description: data.description,
+      createdBy: adminName,
     });
 
     return await repo.save(newCategory);

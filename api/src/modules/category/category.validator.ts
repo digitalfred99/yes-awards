@@ -8,4 +8,5 @@ function fail(message: string): never {
 
 export function validateCreateCategory(data: CreateCategoryDTO) {
   if (!data.name) fail("name is required");
+  if (!data.createdBy) fail("createdBy is required");
 }

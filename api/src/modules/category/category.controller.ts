@@ -1,6 +1,9 @@
 import { CategoryService } from "./category.service";
-import type { CreateCategoryDTO, UpdateCategoryDTO, FilterCategoryDTO } from "@/types/category.type";
-import type { ImageFileInput } from "@/lib/storage/createWithImages";
+import type {
+  CreateCategoryDTO,
+  UpdateCategoryDTO,
+  FilterCategoryDTO,
+} from "@/types/category.type";
 
 export class CategoryController {
   static async getCategories(data: FilterCategoryDTO) {
@@ -16,7 +19,7 @@ export class CategoryController {
   }
 
   static async updateCategory(id: string, data: UpdateCategoryDTO) {
-    return await CategoryService.update(id, data)
+    return await CategoryService.update(id, data);
   }
 
   static async deleteCategories(ids: string[]) {

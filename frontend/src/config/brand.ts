@@ -2,7 +2,7 @@ export const BRAND = {
   name: "OD YES AWARDS",
   fullName: "Odoben Year of Excellence & Success Awards",
   slogan: "Celebrating the voices shaping our tomorrow.",
-  backgroundPath: "/media/bg.webp",
+  backgroundPath: `${import.meta.env.BASE_URL}media/bg.webp`,
 };
 
 export const ADMIN_WHATSAPP = [

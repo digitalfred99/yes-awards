@@ -79,7 +79,7 @@ export class UserService {
 
     if (safeData.nomineeCode) {
       const existingNomineeCode = await repo.findOne({
-        where: { nomineeCode: safeData.nomineeCode}
+        where: { nomineeCode: safeData.nomineeCode, isDeleted: false }
       });
 
       if (existingNomineeCode) {

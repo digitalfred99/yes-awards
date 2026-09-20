@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index, } from "typeorm";
 
 export enum UserRole {
   NOMINEE = "NOMINEE",
@@ -23,6 +23,14 @@ export enum UserStatus {
 }
 
 @Entity({ name: "users" })
+@Index("UQ_users_phoneNumber_active", ["phoneNumber"], {
+  unique: true,
+  where: '"isDeleted" = false',
+})
+@Index("UQ_users_nomineeCode_active", ["nomineeCode"], {
+  unique: true,
+  where: '"isDeleted" = false',
+})
 export class User {
   @PrimaryGeneratedColumn("uuid")
   declare id: string;
@@ -36,7 +44,7 @@ export class User {
   @Column({ type: "varchar", length: 55, nullable: true })
   declare nickName: string;
 
-  @Column({ type: "varchar", length: 15, unique: true })
+  @Column({ type: "varchar", length: 15, })
   declare phoneNumber: string;
 
   @Column({ type: "enum", enum: Gender })
@@ -60,7 +68,7 @@ export class User {
   @Column({ type: "enum", enum: UserInterest, nullable: true })
   declare interest: UserInterest;
 
-  @Column({ type: "varchar", length: 255, unique: true, nullable: true })
+  @Column({ type: "varchar", length: 255, nullable: true })
   declare nomineeCode: string;
 
   @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })

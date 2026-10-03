@@ -33,7 +33,7 @@ function preloadImage(src: string): Promise<void> {
   });
 }
 
-const ENABLE_FLYER_GENERATION = true;
+const ENABLE_FLYER_GENERATION = false;
 
 export function FlyerCard({
   user,
